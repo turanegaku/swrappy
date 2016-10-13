@@ -24,7 +24,7 @@ class slack:
         if not data:
             data = dict()
         data['text'] = text
-        return request(api='chat.postMessage', data=data, channel=channel)
+        return self.request(api='chat.postMessage', data=data, channel=channel)
 
 
     def postfile(self, filepath, data=None, channel=None):
@@ -32,4 +32,4 @@ class slack:
         with open(filepath, 'rb') as file:
             # 'initial_comment': comment,
 
-            return request(api='files.upload', data=data, files={'file': file}, channel=channel)
+            return self.request(api='files.upload', data=data, files={'file': file}, channel=channel)
