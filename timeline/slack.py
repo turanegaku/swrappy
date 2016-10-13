@@ -3,7 +3,7 @@ import requests
 
 URL = 'https://slack.com/api/'
 
-class timeline:
+class slack:
     def __init__(self, TOKEN):
         self.TOKEN = TOKEN
 
