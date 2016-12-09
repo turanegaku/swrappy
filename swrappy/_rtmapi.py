@@ -1,3 +1,4 @@
+import json
 from swrappy._webapi import WebAPI
 from ws4py.client.threadedclient import WebSocketClient
 
