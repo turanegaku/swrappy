@@ -45,6 +45,10 @@ class WebAPI(object):
     def groups_list(self):
         return self.request('groups.list')['groups']
 
+    def channels_history(self, channel, latest=None, oldest=None):
+        data = {'channel': channel}
+        return self.request('channels.history', data=data)['messages']
+
     def post_message(self, text, channel, username=None, icon_emoji=None):
         """ post text message """
         data = {
