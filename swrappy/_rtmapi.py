@@ -26,9 +26,10 @@ class RTMAPI(WebAPI):
 
     def received_message(self, m):
         message = json.loads(str(m))
-        if message['type'] == 'message':
+        m_type = message.get('type', None)
+        if m_type == 'message':
             self.on_message(message)
-        elif message['type'] in ['reconnect_url', 'presence_change']:
+        elif m_type in ['reconnect_url', 'presence_change']:
             return
 
     def on_message(self, message):
