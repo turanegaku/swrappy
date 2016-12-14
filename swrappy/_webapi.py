@@ -45,12 +45,16 @@ class WebAPI(object):
     def groups_list(self):
         return self.request('groups.list')['groups']
 
-    def post_message(self, text, channel=None):
+    def post_message(self, text, channel, username=None, icon_emoji=None):
         """ post text message """
         data = {
                 'text': text,
                 'channel': channel,
                 }
+        if username:
+            data['username'] = username
+        if icon_emoji:
+            data['icon_emoji'] = icon_emoji
         return self.request(api='chat.postMessage', data=data)
 
     def files_upload(self, filepath, data=None, text=None, channel=None):
