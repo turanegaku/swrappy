@@ -54,7 +54,6 @@ class WebAPI(object):
         return self.request(api='chat.postMessage', data=data)
 
     def files_upload(self, filepath, data=None, text=None, channel=None):
-        """ post file message """
         if not data:
             data = dict()
         if text:
@@ -64,6 +63,11 @@ class WebAPI(object):
 
         with open(filepath, 'rb') as file:
             return self.request(api='files.upload', data=data, files={'file': file})
+
+    def files_delete(self, file_id):
+        data = {'file': file_id}
+
+        return self.request(api='files.delete', data=data)
 
 
 if __name__ == '__main__':
