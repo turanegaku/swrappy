@@ -30,7 +30,6 @@ class RTMAPI(WebAPI):
             self.on_message(message)
         elif message['type'] in ['reconnect_url', 'presence_change']:
             return
-        print(m)
 
     def on_message(self, message):
         print(message)
