@@ -18,7 +18,8 @@ class WebAPI(object):
             data = dict()
 
         data['token'] = self.TOKEN
-        data['as_user'] = True
+        if 'username' not in data
+            data['as_user'] = True
         r = requests.post(URL + api, data=data, files=files)
 
         if r.status_code != 200:
@@ -58,6 +59,7 @@ class WebAPI(object):
             data = dict()
         if text:
             data['initial_comment'] = text
+        if channel:
             data['channels'] = [channel]
 
         with open(filepath, 'rb') as file:
