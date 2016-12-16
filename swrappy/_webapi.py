@@ -18,7 +18,7 @@ class WebAPI(object):
             data = dict()
 
         data['token'] = self.TOKEN
-        if 'username' not in data
+        if 'username' not in data:
             data['as_user'] = True
         r = requests.post(URL + api, data=data, files=files)
 
