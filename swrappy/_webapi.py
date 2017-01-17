@@ -49,6 +49,13 @@ class WebAPI(object):
         data = {'channel': channel}
         return self.request('channels.history', data=data)['messages']
 
+    def chat_delete(self, ts, channel):
+        data = {
+                'ts': ts,
+                'channel': channel
+                }
+        return self.request('chat.delete', data=data)
+
     def post_message(self, text, channel, username=None, icon_emoji=None):
         """ post text message """
         data = {
@@ -79,4 +86,4 @@ class WebAPI(object):
 
 
 if __name__ == '__main__':
-    WebAPI('imbot')
+    pass
