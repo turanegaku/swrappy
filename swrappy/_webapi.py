@@ -88,6 +88,8 @@ class WebAPI(object):
             data['username'] = username
         if icon_emoji:
             data['icon_emoji'] = icon_emoji
+        if attachments:
+            data['attachments'] = json.dumps(attachments)
         return self.request(api='chat.postMessage', data=data)
 
     def files_upload(self, filepath, data=None, text=None, channel=None):
