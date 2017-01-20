@@ -3,15 +3,25 @@ import sys
 import requests
 import json
 
+from swrappy._util import find_channel
+
 URL = 'https://slack.com/api/'
-CONFIG_PATH = path.join(path.dirname(sys.argv[0]), 'bots_config.json')
 
 
 class WebAPI(object):
+    CONFIG_PATH = path.join(path.dirname(sys.argv[0]), 'bots_config.json')
+
+    @staticmethod
+    def setConfigDir(dir):
+        WebAPI.CONFIG_PATH = path.join(path.abspath(dir), 'bots_config.json')
+        return WebAPI.CONFIG_PATH
+
     def __init__(self, name):
-        with open(CONFIG_PATH, 'r') as f:
+        with open(WebAPI.CONFIG_PATH, 'r') as f:
             config = json.load(f)
         self.TOKEN = config[name]['TOKEN']
+
+        self.channels = None
 
     def request(self, api, data=None, files=None):
         if not data:
@@ -45,8 +55,19 @@ class WebAPI(object):
     def groups_list(self):
         return self.request('groups.list')['groups']
 
-    def channels_history(self, channel, latest=None, oldest=None):
-        data = {'channel': channel}
+    def channels_history(self, channel, latest=None, oldest=None, count=None):
+        if channel.startswith('#'):
+            c = find_channel(self, channel)['id']
+            if not c:
+                return None
+            channel = c
+
+        data = {
+                'channel': channel,
+                'latest': latest,
+                'oldest': oldest,
+                'count': count,
+                }
         return self.request('channels.history', data=data)['messages']
 
     def chat_delete(self, ts, channel):
@@ -56,11 +77,12 @@ class WebAPI(object):
                 }
         return self.request('chat.delete', data=data)
 
-    def post_message(self, text, channel, username=None, icon_emoji=None):
+    def post_message(self, text, channel, username=None, icon_emoji=None, attachments=None):
         """ post text message """
         data = {
                 'text': text,
                 'channel': channel,
+                'attachments': attachments,
                 }
         if username:
             data['username'] = username
@@ -83,7 +105,6 @@ class WebAPI(object):
         data = {'file': file_id}
 
         return self.request(api='files.delete', data=data)
-
 
 if __name__ == '__main__':
     pass
