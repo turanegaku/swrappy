@@ -10,11 +10,19 @@ pip install git+git://github.com/turanegaku/swrappy.git
 set your API TOKEN to `bots_config.json`
 ```json
 {
-  "botid1": {"TOKEN": 'xxxx-xxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxx'}
-  "botid2": {"TOKEN": 'xxxx-xxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxx'}
+  "botid1": {"TOKEN": "xxxx-xxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxx"},
+  "botid2": {"TOKEN": "xxxx-xxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxx"}
 }
 ```
+#### Get History
+```python
+from swrappy import WebAPI
 
+sl = WebAPI('bot')
+
+h = sl.channels_history(channel='#general')
+print(h)
+```
 
 #### WebAPI
 ```python
@@ -29,9 +37,12 @@ sl.post_message(text='test', channel='#general')
 ```python
 from swrappy import RTMAPI
 
-sl = WebAPI('bot')
+def on_message(message):
+  print(message)
 
-sl.post_message(text='test', channel='#general')
+sl = RTMAPI('bot')
+sl.on_message = on_message
+sl.rtm_start()
 ```
 
 ### Help
